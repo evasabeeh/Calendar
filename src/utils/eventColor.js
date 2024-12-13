@@ -1,14 +1,12 @@
-// utils/eventColor.js
-
 export const getEventCategoryColor = (category) => {
     switch (category) {
         case "work":
-            return "#85A98F"; // Work color
+            return "#D0BFFF";
         case "personal":
-            return "#FFCCE1"; // Personal color
+            return "#99B080"; 
         case "others":
-            return "#81BFDA"; // Others color
+            return "#FFDFDF";
         default:
-            return "#FFFFFF"; // Default color
+            return "#FFFFFF";
     }
 };

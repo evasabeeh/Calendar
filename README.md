@@ -4,7 +4,7 @@
   <h3 align="center">Dynamic Event Calendar Application</h3>
 
   <p align="center">
-  An application to efficiently manage and organize events. Built with React for seamless interactivity and Tailwind CSS for responsive, modern styling, it allows users to view, create, and drag-and-drop events effortlessly. You can check this out here: <em>https://evasabeeh-calendar.vercel.app/</em>
+  An application to efficiently manage and organize events. Built with React for seamless interactivity and Tailwind CSS for responsive, modern styling, it allows users to view, create, and delete events effortlessly. Check this out here: <em>https://evasabeeh-calendar.vercel.app/</em>
     <br/>
     <br/>
   </p>
@@ -12,6 +12,7 @@
 
 ## Built With
 
+<p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/768px-React-icon.svg.png" alt="react" width="80" height="80"/> 
 <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/tailwind-css-icon.png" alt="tailwind" width="80" height="80"/>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/900px-JavaScript-logo.png" alt="javascript" width="80" height="80"/>

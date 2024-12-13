@@ -4,9 +4,7 @@
 
 
 body {
-    background-color: #DDDDDD;
-    /* Set background color to light gray */
+    background-color: transparent;    /*DDDDDD*/
     color: #726A95;
-    /* Set text color to custom purple */
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
