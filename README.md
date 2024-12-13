@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  <img src="public\screenshot.png" alt="View" width="500" height="230"/> 
+  <img src="public\screenshot.png" alt="View" width="500" height="220"/> 
   <h3 align="center">Dynamic Event Calendar Application</h3>
 
   <p align="center">
@@ -36,7 +36,7 @@ The project is deployed on Vercel: <em>https://evasabeeh-calendar.vercel.app/</e
 
 
 ## Project setup
-
+Node and npm should be pre-installed for further steps:
 1. npx create-react-app project-name
 2. cd project-name
 3. npm run start
@@ -45,7 +45,7 @@ The project is deployed on Vercel: <em>https://evasabeeh-calendar.vercel.app/</e
 ## Insights
 
 - Large Screen View
-<img src="public\screenshot1.png" alt="desktop" width="250" height="250"/> 
+<img src="public\screenshot1.png" alt="desktop" width="250" height="225"/> 
 
 - Mobile Screen View
-<img src="public\screenshot2.png" alt="mobile" width="70" height="150"/> 
+<img src="public\screenshot2.png" alt="mobile" width="70" height="180"/> 
