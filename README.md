@@ -35,6 +35,13 @@
 The project is deployed on Vercel: <em>https://evasabeeh-calendar.vercel.app/</em>
 
 
+## Project setup
+
+1. npx create-react-app project-name
+2. cd project-name
+3. npm run start
+
+
 ## Insights
 
 - Large Screen View
