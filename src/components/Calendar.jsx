@@ -115,18 +115,15 @@ export const Calendar = () => {
 
                     const isSelected = day === selectedDay;
 
-                    const isFirstColumn = index % 7 === 0;
-                    const isLastColumn = index % 7 === 6;
+                    const isFirstColumn = index % 7 === 0; 
+                    const isLastColumn = index % 7 === 6; 
 
                     return (
                         <div
                             key={index}
                             className={`p-2 m-2 text-center cursor-pointer rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
-                    hover:shadow-black transition-shadow 
-                    ${isToday ? "bg-curr text-white font-bold" : ""}
-                    ${isSelected ? "bg-primary text-white font-bold" : ""}
-                    ${!isToday && !isSelected ? "bg-white" : ""}
-                    ${isFirstColumn || isLastColumn ? "bg-weekend text-white" : ""}`} // Apply red background for first and last columns
+                hover:shadow-black transition-shadow
+                ${isToday ? "bg-curr text-white font-bold" : isSelected ? "bg-primary text-white font-bold" : isFirstColumn || isLastColumn ? "bg-red-300" : ""}`}
                             onClick={() => handleSelectDay(day)}
                         >
                             {day}
@@ -134,6 +131,7 @@ export const Calendar = () => {
                     );
                 })}
             </div>
+
 
             <div className="flex justify-center space-x-4 mt-4 py-2">
                 <button onClick={() => exportEventsAsJson(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 

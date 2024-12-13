@@ -9,7 +9,6 @@ module.exports = {
         secondary: '#F8F6E3', // Custom secondary color
         text: '#000000', // Black text
         curr: '#00A9FF',   // current date
-        weekend: '#FF8080',
       },
     },
   },
