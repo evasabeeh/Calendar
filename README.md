@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  <img src="public\screenshot.png" alt="View" width="500" height="250"/> 
+  <img src="public\screenshot.png" alt="View" width="500" height="230"/> 
   <h3 align="center">Dynamic Event Calendar Application</h3>
 
   <p align="center">
