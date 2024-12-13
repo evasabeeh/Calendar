@@ -83,21 +83,21 @@ export const Calendar = () => {
     };
 
     return (
-        <div className="bg-secondary min-h-screen rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)]">
+        <div className="bg-secondary min-h-screen rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)]">
             {/* Calendar Grid */}
-            <div className="flex justify-between p-4 text-text">
-                <button className="p-3 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)]" onClick={handlePrevMonth}>&lt; Prev</button>
-                <h1 className="p-2 font-semibold text-2xl sm:text-center w-full">
+            <div className="flex flex-row items-center justify-between px-4 py-4 sm:px-2 sm:py-2 text-text">
+                <button className="p-3 mx-1 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)]" onClick={handlePrevMonth}>&lt;</button>
+                <h1 className="p-2 font-semibold text-2xl w-full text-center">
                     {currentDate.toLocaleString("default", { month: "long" })} {currentDate.getFullYear()}
                 </h1>
-                <button className="p-3 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)]" onClick={handleNextMonth}>Next &gt;</button>
+                <button className="p-3 mx-1 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)]" onClick={handleNextMonth}>&gt;</button>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 p-4 font-semibold text-text">
+            <div className="grid grid-cols-7 gap-1 pd-4 text-text">
                 {dayNames.map((dayName, index) => (
                     <div
                         key={index}
-                        className={`text-center font-semibold ${index === 0 || index === 6 ? "text-red-500" : "text-black"}`}
+                        className={`text-center my-6 font-semibold ${index === 0 || index === 6 ? "text-red-500" : "text-text"}`}
                     >
                         {dayName}
                     </div>
@@ -121,8 +121,7 @@ export const Calendar = () => {
                     return (
                         <div
                             key={index}
-                            className={`p-2 m-2 text-center cursor-pointer rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
-                hover:shadow-black transition-shadow
+                            className={`p-2 m-2 text-center cursor-pointer rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)] hover:bg-primary hover:text-white
                 ${isToday ? "bg-curr text-white font-bold" : isSelected ? "bg-primary text-white font-bold" : isFirstColumn || isLastColumn ? "bg-red-300" : ""}`}
                             onClick={() => handleSelectDay(day)}
                         >
@@ -133,7 +132,7 @@ export const Calendar = () => {
             </div>
 
 
-            <div className="flex justify-center space-x-4 mt-4 py-2">
+            <div className="flex justify-center space-x-4 mt-6 py-2">
                 <button onClick={() => exportEventsAsJson(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
                     hover:shadow-black transition-shadow ">Export as JSON</button>
                 <button onClick={() => exportEventsAsCsv(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 

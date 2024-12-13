@@ -3,7 +3,7 @@ import { Calendar } from "./components/Calendar";
 
 function App() {
   return (
-    <div className="App sm:px-2 sm:py-2 sm:mx-5 sm:my-5 px-0 py-0 mx-0 my-0 bg-transparent">
+    <div className="App sm:p-2 sm:m-2 p-0 m-0 bg-transparent">
       <Calendar />
     </div>
   );
