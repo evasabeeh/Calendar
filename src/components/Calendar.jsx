@@ -1,38 +1,54 @@
 import React, { useState } from "react";
 import { EventModal } from "./EventModal";
 import { EventList } from "./EventList";
-import { getCurrentMonthDays } from "../utils/storage";
-import { saveAs } from "file-saver"; 
+import { saveAs } from "file-saver";
+import { FilterEventsModal } from "./FilterEventsModal"; // Import the filter modal
 
 export const Calendar = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [selectedDay, setSelectedDay] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const todayDate = new Date();
-    const today = todayDate.getDate();
-    const currentMonthDays = getCurrentMonthDays(currentDate);
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState(false); // State for filter modal
+    const [searchKeyword, setSearchKeyword] = useState(""); // Search keyword state
 
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const todayDate = new Date();
+    const today = todayDate.getDate();
 
-    const getStartDayOfMonth = (date) => {
-        const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-        return firstDayOfMonth.getDay();
-    };
+    const getStartDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
+    const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
     const handlePrevMonth = () => {
-        const prevMonth = new Date(currentDate);
-        prevMonth.setMonth(prevMonth.getMonth() - 1);
-        prevMonth.setDate(1);
-        setCurrentDate(prevMonth);
+        setCurrentDate((prevDate) => {
+            const newMonth = prevDate.getMonth() - 1;
+            const newYear = newMonth < 0 ? prevDate.getFullYear() - 1 : prevDate.getFullYear();
+            return new Date(newYear, (newMonth + 12) % 12, 1);
+        });
     };
 
     const handleNextMonth = () => {
-        const nextMonth = new Date(currentDate);
-        nextMonth.setMonth(nextMonth.getMonth() + 1);
-        nextMonth.setDate(1);
-        setCurrentDate(nextMonth);
+        setCurrentDate((prevDate) => {
+            const newMonth = prevDate.getMonth() + 1;
+            const newYear = newMonth > 11 ? prevDate.getFullYear() + 1 : prevDate.getFullYear();
+            return new Date(newYear, newMonth % 12, 1);
+        });
+    };
+
+    const getDaysForCalendar = () => {
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const startDay = getStartDayOfMonth(year, month);
+        const daysInMonth = getDaysInMonth(year, month);
+        const daysGrid = [];
+
+        for (let i = 0; i < startDay; i++) {
+            daysGrid.push(null);
+        }
+        for (let i = 1; i <= daysInMonth; i++) {
+            daysGrid.push(i);
+        }
+        return daysGrid;
     };
 
     const handleSelectDay = (day) => {
@@ -42,22 +58,6 @@ export const Calendar = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
-    };
-
-    const getDaysForCalendar = () => {
-        const startDay = getStartDayOfMonth(currentDate);
-        const daysInMonth = currentMonthDays.length;
-        const daysGrid = [];
-
-        for (let i = 0; i < startDay; i++) {
-            daysGrid.push(null);
-        }
-
-        for (let i = 1; i <= daysInMonth; i++) {
-            daysGrid.push(i);
-        }
-
-        return daysGrid;
     };
 
     const exportEventsAsJson = (events) => {
@@ -73,9 +73,18 @@ export const Calendar = () => {
         saveAs(csvBlob, "events.csv");
     };
 
+    // Filter events based on the keyword (event name or category)
+    const filterEvents = () => {
+        if (!searchKeyword) return events; // Return all events if no search keyword
+        return events.filter((event) =>
+            event.eventName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+            event.category.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+    };
 
     return (
         <div className="bg-secondary min-h-screen rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)]">
+            {/* Calendar Grid */}
             <div className="flex justify-between p-4 text-text">
                 <button className="p-3 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)]" onClick={handlePrevMonth}>&lt; Prev</button>
                 <h1 className="p-2 font-semibold text-2xl sm:text-center w-full">
@@ -88,29 +97,36 @@ export const Calendar = () => {
                 {dayNames.map((dayName, index) => (
                     <div
                         key={index}
-                        className={`text-center ${dayName === "Sun" || dayName === "Sat" ? "text-red-500" : "text-black"}`}
+                        className={`text-center font-semibold ${index === 0 || index === 6 ? "text-red-500" : "text-black"}`}
                     >
                         {dayName}
                     </div>
                 ))}
-            </div>
 
-
-            <div className="grid grid-cols-7 gap-1 p-4">
                 {getDaysForCalendar().map((day, index) => {
                     if (day === null) {
-                        return <div key={index} className="flex justify-center items-center p-4"></div>;
+                        return <div key={index} className="p-4"></div>;
                     }
 
-                    const dayOfWeek = new Date(currentDate.getFullYear(), currentDate.getMonth(), day).getDay();
+                    const isToday =
+                        day === today &&
+                        currentDate.getMonth() === todayDate.getMonth() &&
+                        currentDate.getFullYear() === todayDate.getFullYear();
+
+                    const isSelected = day === selectedDay;
+
+                    const isFirstColumn = index % 7 === 0;
+                    const isLastColumn = index % 7 === 6;
 
                     return (
                         <div
-                            key={day}
-                            className={`flex justify-center items-center p-4 m-1 cursor-pointer rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] hover:shadow-black transition-shadow 
-                    ${selectedDay === day ? "bg-primary text-white" :
-                                    today === day && currentDate.getMonth() === todayDate.getMonth() ? "bg-curr text-white" :
-                                        index % 7 === 6 || index % 7 === 0 ? "bg-weekend text-white" : "bg-white"}`}
+                            key={index}
+                            className={`p-2 m-2 text-center cursor-pointer rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
+                    hover:shadow-black transition-shadow 
+                    ${isToday ? "bg-curr text-white font-bold" : ""}
+                    ${isSelected ? "bg-primary text-white font-bold" : ""}
+                    ${!isToday && !isSelected ? "bg-white" : ""}
+                    ${isFirstColumn || isLastColumn ? "bg-weekend text-white" : ""}`} // Apply red background for first and last columns
                             onClick={() => handleSelectDay(day)}
                         >
                             {day}
@@ -119,12 +135,37 @@ export const Calendar = () => {
                 })}
             </div>
 
-
-
             <div className="flex justify-center space-x-4 mt-4 py-2">
-                <button onClick={() => exportEventsAsJson(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] hover:shadow-black transition-shadow">Export as JSON</button>
-                <button onClick={() => exportEventsAsCsv(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] hover:shadow-black transition-shadow">Export as CSV</button>
+                <button onClick={() => exportEventsAsJson(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
+                    hover:shadow-black transition-shadow ">Export as JSON</button>
+                <button onClick={() => exportEventsAsCsv(events)} className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] 
+                    hover:shadow-black transition-shadow ">Export as CSV</button>
             </div>
+
+            {/* Search bar */}
+            <div className="p-4 flex items-center space-x-4">
+                <input
+                    type="text"
+                    placeholder="Search events on day (by name or category)"
+                    value={searchKeyword}
+                    onChange={(e) => setSearchKeyword(e.target.value)}
+                    className="p-2 w-full border border-gray-300 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] hover:shadow-black transition-shadow"
+                />
+                <button
+                    onClick={() => setIsFilterModalOpen(true)}
+                    className="bg-primary text-white p-2 rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.3)] hover:shadow-black transition-shadow"
+                >
+                    Show
+                </button>
+            </div>
+
+
+            {isFilterModalOpen && (
+                <FilterEventsModal
+                    events={filterEvents()}
+                    closeModal={() => setIsFilterModalOpen(false)}
+                />
+            )}
 
             {isModalOpen && (
                 <EventModal day={selectedDay} events={events} setEvents={setEvents} closeModal={closeModal} />

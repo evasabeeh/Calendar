@@ -21,9 +21,11 @@
 ## Features
 
 - Calendar View
-- Event Management
-- Event List
+- Event Management (Prevention of overlapping of events; Add or Delete events)
+- Event List (Display list of events on selected day)
 - Data Persistence on Page refreshment
+- Clean and modern UI
+- Filter events on selected day
 - Color coding for different Events (such as Work, Personal and others)
 - Export the Event List as JSON or CSV file
 
@@ -32,10 +34,11 @@
 
 The project is deployed on Vercel: <em>https://evasabeeh-calendar.vercel.app/</em>
 
+
 ## Insights
 
 - Large Screen View
-<img src="public\screenshot1.png" alt="desktop" width="220" height="110"/> 
+<img src="public\screenshot1.png" alt="desktop" width="250" height="250"/> 
 
 - Mobile Screen View
 <img src="public\screenshot2.png" alt="mobile" width="70" height="150"/> 
