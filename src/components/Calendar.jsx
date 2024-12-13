@@ -83,7 +83,7 @@ export const Calendar = () => {
     };
 
     return (
-        <div className="bg-secondary min-h-screen rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)]">
+        <div className="bg-secondary min-h-screen rounded-lg shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)] sm:px-8">
             {/* Calendar Grid */}
             <div className="flex flex-row items-center justify-between px-4 py-4 sm:px-2 sm:py-2 text-text">
                 <button className="p-3 mx-1 font-semibold hover:rounded-lg hover:shadow-[5px_5px_10px_0px_rgba(0,_0,_0,_0.9)]" onClick={handlePrevMonth}>&lt;</button>
